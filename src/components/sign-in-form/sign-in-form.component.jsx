@@ -3,7 +3,7 @@ import FormInput from '../form-input/form-input.component';
 import {
   createUserDocumentFromAuth,
   signInWithGooglePopup,
-  signInAuthUserWithEmailAndPassword
+  signInAuthUserWithEmailAndPassword,
 } from '../../utils/firebase/firebase.utils';
 import './sign-in-form.styles.scss';
 import Button from '../button/button.component';
@@ -36,9 +36,24 @@ const SignInForm = () => {
 
   const handleSubmit = async (event) => {
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password)
+      const response = await signInAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
       resetFormFields();
-    } catch (error) {}
+    } catch (error) {
+      switch (error.code) {
+        case 'auth/wrong-password':
+          alert('incorrect password for email');
+          break;
+        case 'auth/user-not-found':
+          alert('no use associated with this email');
+          break;
+        default:
+          console.log(error)
+          break;
+      }
+    }
   };
 
   return (
