@@ -82,7 +82,6 @@ const SignUpForm = () => {
           value={password}
           onChange={handleChange}
         />
-        <label></label>
         <FormInput
           label="Password"
           type="password"
